@@ -14,6 +14,9 @@ from pathlib import Path
 import os
 from django.contrib.messages import constants as messages
 from django.core import mail
+import dj_database_url
+
+from dotenv import load_dotenv
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -77,13 +80,27 @@ WSGI_APPLICATION = 'CostTracker.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'omkar_db', 
+#         'USER': 'postgres',
+#         'PASSWORD': 'omkar',
+#         'HOST': '127.0.0.1', 
+#         'PORT': '5432',
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation
@@ -124,7 +141,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[os.path.join(BASE_DIR,"static"),]
-
+STATIC_ROOT = './Scripts.sh' 
 
 MESSAGE_TAGS = {
     messages.ERROR:"danger"
@@ -140,4 +157,6 @@ EMAIL_HOST_PASSWORD = ''
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'static/img')
 MEDIA_URL = '/img/'
+
+
 
